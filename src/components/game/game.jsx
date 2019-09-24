@@ -19,15 +19,16 @@ function Game(props) {
   const [userData, setUserData] = useState({});
   const [gameData, setGameData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [worldMap, setWorldMap] = useState({});
 
   useEffect(() => {
     setIsLoading(true);
     axios
       .get("https://gazorkazork.herokuapp.com/api/adv/init/")
       .then(res => {
-        console.log(res);
         setUserData({ name: res.data.name });
         setGameData(res.data);
+        setWorldMap(res.data.planet_map);
         setIsLoading(false);
       })
       .catch(err => console.error(err));
@@ -55,7 +56,7 @@ function Game(props) {
         <p>loading...</p>
       ) : (
         <>
-          {gameData.planet_map && <World rooms={gameData.planet_map.rooms} />}
+          {worldMap.rooms && <World worldMap={worldMap} gameData={gameData} />}
           <button onClick={e => handleLogout(e)}>Logout</button>
           <h1>{userData.name}</h1>
           <h3>{gameData.title}</h3>

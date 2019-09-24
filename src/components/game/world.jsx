@@ -3,7 +3,7 @@ import { Graph } from "react-d3-graph";
 
 const root_x = 400;
 const root_y = 200;
-const multiplier = 100;
+const multiplier = 20;
 
 const myConfig = {
   automaticRearrangeAfterDropNode: true,
@@ -15,7 +15,7 @@ const myConfig = {
   highlightDegree: 1,
   highlightOpacity: 1,
   linkHighlightBehavior: true,
-  maxZoom: 8,
+  maxZoom: 5,
   minZoom: 0.1,
   nodeHighlightBehavior: true,
   panAndZoom: false,
@@ -23,7 +23,7 @@ const myConfig = {
   staticGraphWithDragAndDrop: true,
   width: 800,
   d3: {
-    alphaTarget: [-10, 10],
+    alphaTarget: 0,
     gravity: -400,
     linkLength: 180,
     linkStrength: 1
@@ -41,14 +41,13 @@ const myConfig = {
     mouseCursor: "pointer",
     opacity: 1,
     renderLabel: false,
-    size: 500,
+    size: 50,
     strokeColor: "none",
     strokeWidth: 2,
     svg: "",
     symbolType: "circle"
   },
   link: {
-    color: "#d3d3d3",
     fontColor: "black",
     fontSize: 12,
     fontWeight: "normal",
@@ -64,30 +63,38 @@ const myConfig = {
   }
 };
 
-function World(props) {
-  const south_links = props.rooms
+function World({ worldMap, gameData }) {
+  console.log(gameData);
+  console.log(worldMap.rooms[0]);
+  console.log(worldMap.rooms.find(room => room.id === gameData.room_id));
+  const south_links = worldMap.rooms
     .filter(node => node.south !== 0)
     .map(link => ({ source: link.id, target: link.south }));
 
-  const east_links = props.rooms
+  const east_links = worldMap.rooms
     .filter(node => node.east !== 0)
     .map(link => ({ source: link.id, target: link.east }));
   const graph = {
-    nodes: props.rooms.map(node => ({
+    nodes: worldMap.rooms.map(node => ({
       ...node,
       x: node.x * multiplier + root_x,
-      y: node.y * multiplier + root_y
+      y: node.y * -multiplier + root_y,
+      color: node.id === gameData.room_id ? "green" : "#d3d3d3"
     })),
     links: [...south_links, ...east_links]
   };
   return (
     <div>
       <h1>World</h1>
-      <Graph
-        id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
-        data={graph}
-        config={myConfig}
-      />
+      {worldMap.rooms ? (
+        <Graph
+          id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
+          data={graph}
+          config={myConfig}
+        />
+      ) : (
+        <p>loading world map...</p>
+      )}
     </div>
   );
 }

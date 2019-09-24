@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+import World from "./world";
+
 axios.interceptors.request.use(
   options => {
     if (localStorage.token)
@@ -52,6 +54,7 @@ function Game(props) {
         <p>loading...</p>
       ) : (
         <>
+          <World />
           <button onClick={e => handleLogout(e)}>Logout</button>
           <h1>{userData.name}</h1>
           <h3>{gameData.title}</h3>

@@ -3,6 +3,11 @@ import axios from "axios";
 
 const Login = props => {
   const [loginState, setLoginState] = useState({ username: "", password: "" });
+  const [errorMsg, setErrorMsg] = useState({
+    login: false,
+    registration: false,
+    msg: ""
+  });
 
   const [registerState, setRegisterState] = useState({
     username: "",
@@ -20,7 +25,10 @@ const Login = props => {
         localStorage.setItem("token", res.data.key);
         props.setIsLoggedIn(true);
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        setErrorMsg({ login: true, msg: "Bad! Bad credentials!" });
+        console.error(err);
+      });
   };
 
   const handleRegister = e => {
@@ -35,7 +43,13 @@ const Login = props => {
         localStorage.setItem("token", res.data.key);
         props.setIsLoggedIn(true);
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        setErrorMsg({
+          register: true,
+          msg: "Try a stronger password or different username or something idk"
+        });
+        console.error(err);
+      });
   };
 
   const loginChange = e => {
@@ -98,6 +112,7 @@ const Login = props => {
                 value={loginState.password}
               />
             </div>
+            {errorMsg.login && <p>{errorMsg.msg}</p>}
             <button className="form-btn" type="submit">
               Log In
             </button>
@@ -159,6 +174,7 @@ const Login = props => {
                 value={registerState.password2}
               />
             </div>
+            {errorMsg.register && <p>{errorMsg.msg}</p>}
             <button className="form-btn" type="submit">
               Sign Up
             </button>

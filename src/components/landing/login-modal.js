@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const Login = () => {
+const Login = props => {
   const [loginState, setLoginState] = useState({ username: "", password: "" });
+  const [errorMsg, setErrorMsg] = useState({
+    login: false,
+    registration: false,
+    msg: ""
+  });
 
   const [registerState, setRegisterState] = useState({
     username: "",
@@ -17,24 +22,34 @@ const Login = () => {
     axios
       .post("https://gazorkazork.herokuapp.com/api/login/", loginState)
       .then(res => {
-        console.log(res);
         localStorage.setItem("token", res.data.key);
+        props.setIsLoggedIn(true);
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        setErrorMsg({ login: true, msg: "Bad! Bad credentials!" });
+        console.error(err);
+      });
   };
 
   const handleRegister = e => {
     e.preventDefault();
+    console.log(registerState);
     axios
       .post(
         "https://gazorkazork.herokuapp.com/api/registration/",
         registerState
       )
       .then(res => {
-        console.log(res);
         localStorage.setItem("token", res.data.key);
+        props.setIsLoggedIn(true);
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        setErrorMsg({
+          register: true,
+          msg: "Try a stronger password or different username or something idk"
+        });
+        console.error(err);
+      });
   };
 
   const loginChange = e => {
@@ -97,6 +112,7 @@ const Login = () => {
                 value={loginState.password}
               />
             </div>
+            {errorMsg.login && <p>{errorMsg.msg}</p>}
             <button className="form-btn" type="submit">
               Log In
             </button>
@@ -158,6 +174,7 @@ const Login = () => {
                 value={registerState.password2}
               />
             </div>
+            {errorMsg.register && <p>{errorMsg.msg}</p>}
             <button className="form-btn" type="submit">
               Sign Up
             </button>

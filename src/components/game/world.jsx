@@ -5,79 +5,6 @@ const root_x = 400;
 const root_y = 200;
 const multiplier = 100;
 
-const seed = [
-  {
-    id: 1,
-    x: 0,
-    y: 0,
-    north: 5,
-    south: 0,
-    east: 0,
-    west: 0
-  },
-  {
-    id: 2,
-    x: -1,
-    y: 0,
-    north: 6,
-    south: 3,
-    east: 0,
-    west: 0
-  },
-  {
-    id: 3,
-    x: -1,
-    y: -1,
-    north: 2,
-    south: 0,
-    east: 0,
-    west: 4
-  },
-  {
-    id: 4,
-    x: -2,
-    y: -1,
-    north: 0,
-    south: 0,
-    east: 3,
-    west: 0
-  },
-  {
-    id: 5,
-    x: 0,
-    y: 1,
-    north: 0,
-    south: 1,
-    east: 0,
-    west: 6
-  },
-  {
-    id: 6,
-    x: -1,
-    y: 1,
-    north: 0,
-    south: 2,
-    east: 5,
-    west: 0
-  }
-];
-const south_links = seed
-  .filter(node => node.south !== 0)
-  .map(link => ({ source: link.id, target: link.south }));
-
-const east_links = seed
-  .filter(node => node.east !== 0)
-  .map(link => ({ source: link.id, target: link.east }));
-
-const graph = {
-  nodes: seed.map(node => ({
-    ...node,
-    x: node.x * multiplier + root_x,
-    y: node.y * multiplier + root_y
-  })),
-  links: [...south_links, ...east_links]
-};
-
 const myConfig = {
   automaticRearrangeAfterDropNode: true,
   collapsible: false,
@@ -137,8 +64,22 @@ const myConfig = {
   }
 };
 
-function World() {
-  console.log(Graph.prototype);
+function World(props) {
+  const south_links = props.rooms
+    .filter(node => node.south !== 0)
+    .map(link => ({ source: link.id, target: link.south }));
+
+  const east_links = props.rooms
+    .filter(node => node.east !== 0)
+    .map(link => ({ source: link.id, target: link.east }));
+  const graph = {
+    nodes: props.rooms.map(node => ({
+      ...node,
+      x: node.x * multiplier + root_x,
+      y: node.y * multiplier + root_y
+    })),
+    links: [...south_links, ...east_links]
+  };
   return (
     <div>
       <h1>World</h1>

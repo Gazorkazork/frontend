@@ -25,6 +25,7 @@ function Game(props) {
     axios
       .get("https://gazorkazork.herokuapp.com/api/adv/init/")
       .then(res => {
+        console.log(res);
         setUserData({ name: res.data.name });
         setGameData(res.data);
         setIsLoading(false);
@@ -54,7 +55,7 @@ function Game(props) {
         <p>loading...</p>
       ) : (
         <>
-          <World />
+          {gameData.planet_map && <World rooms={gameData.planet_map.rooms} />}
           <button onClick={e => handleLogout(e)}>Logout</button>
           <h1>{userData.name}</h1>
           <h3>{gameData.title}</h3>

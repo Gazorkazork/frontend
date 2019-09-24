@@ -1,47 +1,55 @@
 import React, { useState } from "react";
-import axios from "axios"
+import axios from "axios";
 
 const Login = () => {
+  const [loginState, setLoginState] = useState({ username: "", password: "" });
 
-  const [loginState, setLoginState] = useState({username: "", password: ""})
+  const [registerState, setRegisterState] = useState({
+    username: "",
+    password1: "",
+    password2: ""
+  });
 
-  const [registerState, setRegisterState] = useState({username: "", password1: "", password2: ""})
+  const [isRegister, setIsRegister] = useState(false);
 
-  const [isRegister, setIsRegister] = useState(false)
-
-  const handleLogin = (e) => {
-    e.preventDefault()
+  const handleLogin = e => {
+    e.preventDefault();
     axios
-      .post('https://gazorkazork.herokuapp.com/api/login', loginState)
+      .post("https://gazorkazork.herokuapp.com/api/login/", loginState)
       .then(res => {
-        console.log(res)
-        localStorage.setItem('token', res.key)})
-      .catch(err => console.error(err))
-  }
+        console.log(res);
+        localStorage.setItem("token", res.data.key);
+      })
+      .catch(err => console.error(err));
+  };
 
-  const handleRegister = (e) => {
-    e.preventDefault()
+  const handleRegister = e => {
+    e.preventDefault();
     axios
-    .post('https://gazorkazork.herokuapp.com/api/registration', registerState)
-    .then(res => {
-      console.log(res)
-      localStorage.setItem('token', res.key)})
-    .catch(err => console.error(err))
-  }
+      .post(
+        "https://gazorkazork.herokuapp.com/api/registration/",
+        registerState
+      )
+      .then(res => {
+        console.log(res);
+        localStorage.setItem("token", res.data.key);
+      })
+      .catch(err => console.error(err));
+  };
 
-  const loginChange = (e) => {
+  const loginChange = e => {
     setLoginState({
       ...loginState,
       [e.target.name]: e.target.value
-    })
-  }
+    });
+  };
 
-  const registerChange = (e) => {
+  const registerChange = e => {
     setRegisterState({
       ...registerState,
       [e.target.name]: e.target.value
-    })
-  }
+    });
+  };
 
   return (
     <div className="modal-wrapper">
@@ -54,10 +62,13 @@ const Login = () => {
               <br />
               login with your personal info
             </p>
-            <button className="collapsed-btn" onClick={(e) => {
-              e.preventDefault()
-              setIsRegister(false)
-            }}>
+            <button
+              className="collapsed-btn"
+              onClick={e => {
+                e.preventDefault();
+                setIsRegister(false);
+              }}
+            >
               Log In
             </button>
           </div>
@@ -68,12 +79,23 @@ const Login = () => {
           <form className="form login" onSubmit={handleLogin}>
             <div className="input-field">
               <i className="fas fa-user"></i>
-              <input placeholder="Username" onChange={loginChange} name="username" value={loginState.username} />
+              <input
+                placeholder="Username"
+                onChange={loginChange}
+                name="username"
+                value={loginState.username}
+              />
             </div>
 
             <div className="input-field">
               <i className="fas fa-key"></i>
-              <input type="password" placeholder="Password" onChange={loginChange} name="password" value={loginState.password} />
+              <input
+                type="password"
+                placeholder="Password"
+                onChange={loginChange}
+                name="password"
+                value={loginState.password}
+              />
             </div>
             <button className="form-btn" type="submit">
               Log In
@@ -91,10 +113,13 @@ const Login = () => {
               <br />
               and start playing!
             </p>
-            <button className="collapsed-btn" onClick={(e) => {
-              e.preventDefault()
-              setIsRegister(true)
-            }}>
+            <button
+              className="collapsed-btn"
+              onClick={e => {
+                e.preventDefault();
+                setIsRegister(true);
+              }}
+            >
               Sign Up
             </button>
           </div>
@@ -106,15 +131,32 @@ const Login = () => {
           <form action="" className="form login" onSubmit={handleRegister}>
             <div className="input-field">
               <i className="fas fa-user"></i>
-              <input placeholder="Username" onChange={registerChange} name="username" value={registerState.username} />
+              <input
+                placeholder="Username"
+                onChange={registerChange}
+                name="username"
+                value={registerState.username}
+              />
             </div>
             <div className="input-field">
               <i className="fas fa-key"></i>
-              <input type="password" placeholder="Password" onChange={registerChange} name="password1" value={registerState.password1} />
+              <input
+                type="password"
+                placeholder="Password"
+                onChange={registerChange}
+                name="password1"
+                value={registerState.password1}
+              />
             </div>
             <div className="input-field">
               <i className="fas fa-key"></i>
-              <input type="password" placeholder="Confirm Password" onChange={registerChange} name="password2" value={registerState.password2} />
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                onChange={registerChange}
+                name="password2"
+                value={registerState.password2}
+              />
             </div>
             <button className="form-btn" type="submit">
               Sign Up

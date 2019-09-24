@@ -1,9 +1,9 @@
-import React from "react"
-import Login from "./login-modal"
+import React from "react";
+import Login from "./login-modal";
 
-import './landing.css'
+import "./landing.css";
 
-const Landing = () => {
+const Landing = props => {
   return (
     <div className="landing-main">
       {/* <h1>Gazorkazork MUD</h1>
@@ -12,10 +12,9 @@ const Landing = () => {
       <p>Maybe possibly an image or something like that for the background???</p>
       <p>The sky is the limit, really.</p> */}
 
-      <Login />
+      <Login setIsLoggedIn={props.setIsLoggedIn} />
     </div>
+  );
+};
 
-  )
-}
-
-export default Landing
+export default Landing;

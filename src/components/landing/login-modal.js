@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const Login = () => {
+const Login = props => {
   const [loginState, setLoginState] = useState({ username: "", password: "" });
 
   const [registerState, setRegisterState] = useState({
@@ -17,22 +17,23 @@ const Login = () => {
     axios
       .post("https://gazorkazork.herokuapp.com/api/login/", loginState)
       .then(res => {
-        console.log(res);
         localStorage.setItem("token", res.data.key);
+        props.setIsLoggedIn(true);
       })
       .catch(err => console.error(err));
   };
 
   const handleRegister = e => {
     e.preventDefault();
+    console.log(registerState);
     axios
       .post(
         "https://gazorkazork.herokuapp.com/api/registration/",
         registerState
       )
       .then(res => {
-        console.log(res);
         localStorage.setItem("token", res.data.key);
+        props.setIsLoggedIn(true);
       })
       .catch(err => console.error(err));
   };

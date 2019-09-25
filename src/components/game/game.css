@@ -1,0 +1,54 @@
+.game-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.data-containter {
+  width: 23%;
+  height: 97%;
+  border: 1px solid red;
+}
+
+.hub-container {
+  width: 75%;
+  height: 97%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.hub-left-container {
+  width: 56%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hub-right-container {
+  width: 43%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.map-container {
+  height: 60%;
+  border: 1px solid blue;
+}
+
+.controls-container {
+  height: 38%;
+  border: 1px solid blue;
+}
+
+.chat-container {
+  height: 60%;
+  border: 1px solid blue;
+}
+
+.input-container {
+  height: 38%;
+  border: 1px solid blue;
+}

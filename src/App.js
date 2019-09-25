@@ -16,7 +16,9 @@ function App() {
   return (
     <div className="App">
       {isLoggedIn ? (
-        <Game handleLogout={handleLogout} />
+        <div className="main-container">
+          <Game handleLogout={handleLogout} />
+        </div>
       ) : (
         <Landing setIsLoggedIn={setIsLoggedIn} />
       )}

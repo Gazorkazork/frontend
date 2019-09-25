@@ -63,7 +63,7 @@ const myConfig = {
   }
 };
 
-function World({ worldMap, gameData }) {
+function Map({ worldMap, gameData }) {
   console.log(gameData);
   console.log(worldMap.rooms[0]);
   console.log(worldMap.rooms.find(room => room.id === gameData.room_id));
@@ -84,9 +84,9 @@ function World({ worldMap, gameData }) {
     links: [...south_links, ...east_links]
   };
   return (
-    <div>
-      <h1>World</h1>
-      {worldMap.rooms ? (
+    <div className="map-container">
+      <h1>Map</h1>
+      {/* {worldMap.rooms ? (
         <Graph
           id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
           data={graph}
@@ -94,9 +94,9 @@ function World({ worldMap, gameData }) {
         />
       ) : (
         <p>loading world map...</p>
-      )}
+      )} */}
     </div>
   );
 }
 
-export default World;
+export default Map;

@@ -3,7 +3,7 @@ import axios from "axios";
 
 import parseCommand from "../../utils/textParser";
 
-function Input(props) {
+function Input({setGameData}) {
   const [userInput, setUserInput] = useState("");
 
   const handleChange = e => {
@@ -21,16 +21,19 @@ function Input(props) {
           })
           .then(res => {
             console.log(res);
-            // setGameData(res.data);
+            setGameData(res.data);
           })
           .catch(err => console.error(err));
+        break
       case "say":
         axios
           .post("https://gazorkazork.herokuapp.com/api/adv/say/", {
             message: userInput
           })
           .catch(err => console.error(err));
+        break
       default:
+        break
     }
     setUserInput("");
   };

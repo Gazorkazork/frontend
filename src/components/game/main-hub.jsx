@@ -8,7 +8,7 @@ function Main_Hub(props) {
   return (
     <div className="hub-container">
       {/* <h2>This is the main hub</h2> */}
-      <Hub_Left gameData={props.gameData} />
+      <Hub_Left gameData={props.gameData} setGameData={props.setGameData} />
       <Hub_Right worldMap={props.worldMap} gameData={props.gameData} />
       {/* <button onClick={e => props.handleLogout(e)}>Logout</button>
       <h1>{props.userData.name}</h1>

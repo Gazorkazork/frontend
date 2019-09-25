@@ -70,7 +70,16 @@ const prepositions = [
   "out_of"
 ];
 
-const movement_adverbs = ["n", "s", "e", "w", "up", "down", "in", "out"];
+const movement_adverbs = [
+    "n",
+    "s",
+    "e",
+    "w",
+    // "up",
+    // "down",
+    // "in",
+    // "out"
+];
 
 // Function to help interpret player commands
 export default function parseCommand(command) {

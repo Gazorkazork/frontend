@@ -6,8 +6,8 @@ import Input from "./input.jsx";
 function Hub_Left(props) {
   return (
     <div className="hub-left-container">
-      <Chat />
-      <Input />
+      <Chat uuid={props.gameData.uuid}/>
+      <Input setGameData={props.setGameData}/>
     </div>
   );
 }

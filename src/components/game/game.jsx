@@ -69,6 +69,7 @@ function Game(props) {
             <Main_Hub
               worldMap={worldMap}
               gameData={gameData}
+              setGameData={setGameData}
               userData={userData}
               move={move}
               handleLogout={handleLogout}

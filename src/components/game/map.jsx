@@ -1,9 +1,9 @@
 import React from "react";
 import { Graph } from "react-d3-graph";
 
-const root_x = 400;
-const root_y = 200;
-const multiplier = 20;
+const root_x = 175;
+const root_y = 140;
+const multiplier = 18;
 
 const myConfig = {
   automaticRearrangeAfterDropNode: true,
@@ -11,7 +11,7 @@ const myConfig = {
   directed: false,
   focusAnimationDuration: 0.75,
   focusZoom: 1,
-  height: 400,
+  height: 280,
   highlightDegree: 1,
   highlightOpacity: 1,
   linkHighlightBehavior: true,
@@ -21,7 +21,7 @@ const myConfig = {
   panAndZoom: false,
   staticGraph: true,
   staticGraphWithDragAndDrop: true,
-  width: 800,
+  width: 350,
   d3: {
     alphaTarget: 0,
     gravity: -400,
@@ -85,16 +85,18 @@ function Map({ worldMap, gameData }) {
   };
   return (
     <div className="map-container">
-      <h1>Map</h1>
-      {/* {worldMap.rooms ? (
+      {worldMap.rooms ? (
+        <div>
         <Graph
           id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
           data={graph}
           config={myConfig}
         />
+        <h3 className="room-title">{gameData.title}</h3>
+        </div>
       ) : (
         <p>loading world map...</p>
-      )} */}
+      )}
     </div>
   );
 }

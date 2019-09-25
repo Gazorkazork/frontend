@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+import "./game.css";
 import axios from "axios";
 
-import World from "./world";
+import Map from "./map";
+import Data from "./data";
+import Main_Hub from "./main-hub";
 
 axios.interceptors.request.use(
   options => {
@@ -31,7 +34,11 @@ function Game(props) {
         setWorldMap(res.data.planet_map);
         setIsLoading(false);
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        localStorage.removeItem("token");
+        setIsLoading(false);
+      });
   }, []);
 
   const handleLogout = e => {
@@ -51,21 +58,23 @@ function Game(props) {
       .catch(err => console.error(err));
   };
   return (
-    <div>
+    <div className="game-container">
       {isLoading ? (
         <p>loading...</p>
       ) : (
         <>
-          {worldMap.rooms && <World worldMap={worldMap} gameData={gameData} />}
-          <button onClick={e => handleLogout(e)}>Logout</button>
-          <h1>{userData.name}</h1>
-          <h3>{gameData.title}</h3>
-          <h5>{gameData.description}</h5>
-          <button onClick={e => move(e, "n")}>N</button>
-          <button onClick={e => move(e, "e")}>E</button>
-          <button onClick={e => move(e, "s")}>S</button>
-          <button onClick={e => move(e, "w")}>W</button>
-          <h3>{gameData.error_msg}</h3>
+          <Data />
+
+          {worldMap.rooms && (
+            <Main_Hub
+              worldMap={worldMap}
+              gameData={gameData}
+              userData={userData}
+              move={move}
+              handleLogout={handleLogout}
+            />
+          )}
+          {/* <h3>{gameData.error_msg}</h3> */}
         </>
       )}
     </div>

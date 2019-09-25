@@ -1,6 +1,5 @@
 import React from "react";
 import Pusher from "pusher-js";
-import axios from "axios";
 
 class Chat extends React.Component {
   constructor(props) {
@@ -12,16 +11,11 @@ class Chat extends React.Component {
   addMessage = msg => {
     this.setState(prev => ({
       ...prev,
-      chat: [msg, ...prev.chat]
+      chat:
+        prev.chat.length >= 30
+          ? [msg, ...prev.chat.slice(1)]
+          : [msg, ...prev.chat]
     }));
-  };
-  say = e => {
-    e.preventDefault();
-    axios
-      .post("https://gazorkazork.herokuapp.com/api/adv/say/", {
-        message: "what a message"
-      })
-      .catch(err => console.error(err));
   };
 
   componentDidMount() {
@@ -33,10 +27,7 @@ class Chat extends React.Component {
     });
     const channel_user = pusher.subscribe(`p-channel-${this.props.uuid}`);
     channel_user.bind("broadcast", data => {
-      this.setState(prev => ({
-        ...prev,
-        chat: [data.message, ...prev.chat]
-      }));
+      this.addMessage(data.message);
     });
 
     const channel_main = pusher.subscribe(`main-channel`);
@@ -48,7 +39,6 @@ class Chat extends React.Component {
   render() {
     return (
       <div className="chat-container">
-        <button onClick={this.say}>Test Say</button>
         {this.state.chat.map(txt => {
           return <p>{txt}</p>;
         })}

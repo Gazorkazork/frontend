@@ -162,6 +162,11 @@
   /* height: 85%; */
   box-shadow: inset 3px 2px 20px -1px rgba(13, 0, 131, 0.507);
   background-image: url(../../assets/crt_monitor_dots_3.jpg);
+  background-size: cover;
   border-bottom: 5px rgb(27, 27, 27, .85) inset;
   border-radius: 1.5rem 1.5rem 0.2rem 0.2rem;
+}
+
+.logo {
+    
 }

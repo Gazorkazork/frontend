@@ -122,7 +122,7 @@ export default function parseCommand(command) {
 
   // Check input for any words to replace with recognized commands
   command = command.map(el => {
-    if (el in single_word_replace) {
+    if (single_word_replace.el) {
       el = single_word_replace.el;
     }
     return el;
@@ -156,7 +156,7 @@ export default function parseCommand(command) {
 
   // Check for command "go" and synonyms
   if (["go", "walk", "travel"].includes(command[0])) {
-    if (command.length === 2 && movement_adverbs.includes(command[0])) {
+    if (command.length === 2 && movement_adverbs.includes(command[1])) {
       return {
         act: command[0],
         adv: command[1],

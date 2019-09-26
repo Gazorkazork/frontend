@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Graph } from "react-d3-graph";
 
 const root_x = 175;
@@ -11,7 +11,6 @@ const myConfig = {
   directed: false,
   focusAnimationDuration: 0.75,
   focusZoom: 1,
-  height: 280,
   highlightDegree: 1,
   highlightOpacity: 1,
   linkHighlightBehavior: true,
@@ -21,7 +20,8 @@ const myConfig = {
   panAndZoom: false,
   staticGraph: true,
   staticGraphWithDragAndDrop: true,
-  width: 350,
+  // height: 280,
+  // width: 350,
   d3: {
     alphaTarget: 0,
     gravity: -400,
@@ -64,35 +64,63 @@ const myConfig = {
 };
 
 function Map({ worldMap, gameData }) {
-  console.log(gameData);
-  console.log(worldMap.rooms[0]);
-  console.log(worldMap.rooms.find(room => room.id === gameData.room_id));
-  const south_links = worldMap.rooms
-    .filter(node => node.south !== 0)
-    .map(link => ({ source: link.id, target: link.south }));
+  const mapRef = useRef(null);
+  const [rectCoords, setRectCoords] = useState({
+    height: 0,
+    width: 0
+  })
+  const [configM, setConfigM] = useState(myConfig)
+  const [graph, setGraph] = useState({})
 
-  const east_links = worldMap.rooms
-    .filter(node => node.east !== 0)
-    .map(link => ({ source: link.id, target: link.east }));
-  const graph = {
-    nodes: worldMap.rooms.map(node => ({
-      ...node,
-      x: node.x * multiplier + root_x,
-      y: node.y * -multiplier + root_y,
-      color: node.id === gameData.room_id ? "green" : "#d3d3d3"
-    })),
-    links: [...south_links, ...east_links]
-  };
+  useEffect(() => {
+    window.addEventListener("resize", handleRefresh);
+    handleRefresh()
+  }, [])
+
+  useEffect(() => {handleRefresh()}, [gameData.room_id])
+
+  const handleRefresh = () => {
+    console.log("YO")
+    const coords = mapRef.current.getBoundingClientRect()
+    coords.height *= .88
+    setRectCoords({
+      height: coords.height,
+      width: coords.width
+    })
+    const south_links = worldMap.rooms
+      .filter(node => node.south !== 0)
+      .map(link => ({ source: link.id, target: link.south }));
+
+    const east_links = worldMap.rooms
+      .filter(node => node.east !== 0)
+      .map(link => ({ source: link.id, target: link.east }));
+    const newGraph = {
+      nodes: worldMap.rooms.map(node => ({
+        ...node,
+        x: node.x * (coords.width / 20) + .5 * coords.width,
+        y: node.y * -(coords.width / 20) + .5 * coords.height,
+        size: coords.width / 8,
+        color: node.id === gameData.room_id ? "green" : "#d3d3d3"
+      })),
+      links: [...south_links, ...east_links]
+    };
+    setGraph(newGraph)
+  }
+
   return (
-    <div className="map-container">
-      {worldMap.rooms ? (
-        <div>
-        <Graph
-          id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
-          data={graph}
-          config={myConfig}
-        />
-        <h3 className="room-title">{gameData.title}</h3>
+    <div className="map-container" ref={mapRef}>
+      {worldMap.rooms && rectCoords.height !== 0 ? (
+        <div className="inner-graph-box">
+          <Graph
+          className="graph"
+            id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
+            data={graph}
+            config={{...myConfig,
+              height: rectCoords.height,
+              width: rectCoords.width
+            }}
+          />
+          <h3 className="hub-right-heading">{gameData.title}</h3>
         </div>
       ) : (
         <p>loading world map...</p>

@@ -28,7 +28,7 @@ function Input({setGameData}) {
       case "say":
         axios
           .post("https://gazorkazork.herokuapp.com/api/adv/say/", {
-            message: userInput
+            message: parsedInput.dirObj
           })
           .catch(err => console.error(err));
         break

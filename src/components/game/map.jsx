@@ -122,7 +122,7 @@ function Map({ worldMap, gameData }) {
             config={{
               ...myConfig,
               height: rectCoords.height,
-              width: rectCoords.width
+              width: rectCoords.width - 10
             }}
           />
           <h3 className="hub-right-heading">{gameData.title}</h3>

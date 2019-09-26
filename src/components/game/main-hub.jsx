@@ -14,6 +14,7 @@ function Main_Hub(props) {
         gameData={props.gameData}
       />
       <Hub_Right
+        handleLogout={props.handleLogout}
         worldMap={props.worldMap}
         gameData={props.gameData}
         userData={props.userData}

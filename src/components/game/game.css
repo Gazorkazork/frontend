@@ -237,8 +237,11 @@
   color: rgb(116, 188, 255);
 }
 
+.data-categories {
+}
+
 .player {
-  font-size: 1vw;
+  font-size: 1.6rem;
   line-height: 130%;
   color: rgb(116, 188, 255);
 }

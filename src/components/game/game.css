@@ -114,7 +114,6 @@
 }
 
 .input-room-title {
-  font-size: 2rem;
   font-size: 1.5vw;
   color: rgb(116, 188, 255);
   margin: 3% 0 0 0;
@@ -152,7 +151,6 @@
   background-image: linear-gradient(135deg, #00065e 20%, #000985 100%);
   color: rgb(116, 188, 255);
   font-weight: bold;
-  font-size: 1.5rem;
   font-size: 1.2vw;
   border: 2px solid rgb(116, 188, 255);
   border-radius: 1rem;
@@ -183,6 +181,31 @@
 #graph-id-graph-wrapper {
   box-shadow: inset 3px 2px 20px -1px rgba(13, 0, 131, 0.507);
   background-image: url(../../assets/crt_monitor_dots_3.jpg);
+  background-size: cover;
   border-bottom: 5px rgb(27, 27, 27, 0.85) inset;
   border-radius: 1.5rem 1.5rem 0.2rem 0.2rem;
+}
+
+.logo {
+  max-width: 600px;
+  height: auto;
+}
+
+@media (max-width: 900px) {
+  .input-room-title {
+    font-size: 1.35rem;
+  }
+
+  .input-room-description {
+    font-size: 1.215rem;
+  }
+
+  .hub-right-heading {
+    font-size: 1.35rem;
+  }
+
+  .direction-button,
+  .direction-button:focus {
+    font-size: 1.08rem;
+  }
 }

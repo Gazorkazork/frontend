@@ -68,25 +68,27 @@ function Map({ worldMap, gameData }) {
   const [rectCoords, setRectCoords] = useState({
     height: 0,
     width: 0
-  })
-  const [configM, setConfigM] = useState(myConfig)
-  const [graph, setGraph] = useState({})
+  });
+  const [configM, setConfigM] = useState(myConfig);
+  const [graph, setGraph] = useState({});
 
   useEffect(() => {
     window.addEventListener("resize", handleRefresh);
-    handleRefresh()
-  }, [])
+    handleRefresh();
+  }, []);
 
-  useEffect(() => {handleRefresh()}, [gameData.room_id])
+  useEffect(() => {
+    handleRefresh();
+  }, [gameData.room_id]);
 
   const handleRefresh = () => {
-    console.log("YO")
-    const coords = mapRef.current.getBoundingClientRect()
-    coords.height *= .85
+    console.log("YO");
+    const coords = mapRef.current.getBoundingClientRect();
+    coords.height *= 0.85;
     setRectCoords({
       height: coords.height,
       width: coords.width
-    })
+    });
     const south_links = worldMap.rooms
       .filter(node => node.south !== 0)
       .map(link => ({ source: link.id, target: link.south }));
@@ -97,15 +99,17 @@ function Map({ worldMap, gameData }) {
     const newGraph = {
       nodes: worldMap.rooms.map(node => ({
         ...node,
-        x: node.x * (coords.width / 20) + .5 * coords.width,
-        y: node.y * -(coords.width / 20) + .5 * coords.height,
-        size: coords.width / 8,
-        color: node.id === gameData.room_id ? "green" : "#d3d3d3"
+        x: node.x * (coords.width / 20) + 0.5 * coords.width,
+        y: node.y * -(coords.width / 20) + 0.5 * coords.height,
+        size:
+          node.id === gameData.room_id ? coords.width / 3 : coords.width / 6,
+        color: node.id === gameData.room_id ? "#91ff01" : "#d3d3d3",
+        symbolType: node.id === gameData.room_id ? "circle" : "square"
       })),
       links: [...south_links, ...east_links]
     };
-    setGraph(newGraph)
-  }
+    setGraph(newGraph);
+  };
 
   return (
     <div className="map-container" ref={mapRef}>
@@ -115,9 +119,10 @@ function Map({ worldMap, gameData }) {
             className="graph"
             id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
             data={graph}
-            config={{...myConfig,
+            config={{
+              ...myConfig,
               height: rectCoords.height,
-              width: rectCoords.width
+              width: rectCoords.width - 10
             }}
           />
           <h3 className="hub-right-heading">{gameData.title}</h3>

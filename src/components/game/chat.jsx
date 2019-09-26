@@ -27,6 +27,22 @@ class Chat extends React.Component {
     });
     const channel_user = pusher.subscribe(`p-channel-${this.props.uuid}`);
     channel_user.bind("broadcast", data => {
+      const split_message = data.message.split(" ");
+      if (split_message[1] === "has" && split_message[2] === "entered") {
+        //add name to data component
+        this.props.setGameData({
+          ...this.props.gameData,
+          players: [...this.props.gameData.players, split_message[0]]
+        });
+      } else if (split_message[1] === "has" && split_message[2] === "walked") {
+        //remove name to data component
+        this.props.setGameData({
+          ...this.props.gameData,
+          players: this.props.gameData.players.filter(
+            name => name != split_message[0]
+          )
+        });
+      }
       this.addMessage(data.message);
     });
 

@@ -66,7 +66,7 @@ function Input({ gameData, setGameData }) {
       <h2 className="input-room-title">{gameData.title}</h2>
       <h3 className="input-room-description">{gameData.description}</h3>
       <form onSubmit={handleSubmit}>
-        <input
+        <input className="input-box"
           type="text"
           name="userInput"
           placeholder="Type a command..."

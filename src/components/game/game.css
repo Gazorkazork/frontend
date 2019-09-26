@@ -47,6 +47,7 @@
 
 .controls-container {
   height: 38%;
+  padding-bottom: 7px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -60,6 +61,7 @@
 .controls-buttons {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 95%;
   height: 70%;
 }
@@ -111,6 +113,9 @@
   background-color: rgb(26, 26, 26, 0.85);
   border: 5px rgb(27, 27, 27) inset;
   box-shadow: inset 3px 9px 25px -1px rgb(14, 14, 14);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .input-room-title {
@@ -121,19 +126,22 @@
 
 .input-room-description {
   font-size: 1.5rem;
-  font-size: 1.3vw;
+  font-size: 1.1vw;
   line-height: 120%;
   color: rgb(116, 188, 255);
-  margin: 3% 3%;
+  margin: 2.5% 2.5%;
 }
 
-.input-box{
+.input-box,
+.input-box:focus {
   width: 80%;
+  font-size: 1vw;
   color: white;
   background-image: linear-gradient(135deg, #00065e 20%, #000985 100%);
-  border: none;
+  border: 2px solid rgb(116, 188, 255);
   border-radius: 0.5rem;
   padding: 5px 20px;
+  outline: none;
 }
 
 ::placeholder {
@@ -141,9 +149,26 @@
 }
 
 .hub-right-heading {
-  font-size: 2rem;
   font-size: 1.5vw;
   color: rgb(116, 188, 255);
+}
+
+.commands {
+  font-size: 1.3vw;
+  color: rgb(116, 188, 255);
+  padding-bottom: 1vh;
+}
+
+.command-text {
+  font-size: 1vw;
+  line-height: 120%;
+  color: rgb(116, 188, 255);
+  text-shadow: 3px 3px rgb(0, 44, 139);
+}
+
+.command-buttons {
+  display: flex;
+  flex-direction: column;
 }
 
 .direction-controls {
@@ -179,6 +204,12 @@
 
 .direction-button:active {
   background-color: rgb(0, 132, 255);
+}
+
+.logout-button {
+  width: 7vw;
+  height: 3.5vh;
+  margin-bottom: 1vh;
 }
 
 .inner-graph-box {

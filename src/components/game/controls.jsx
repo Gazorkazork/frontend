@@ -37,8 +37,22 @@ function Controls(props) {
           <div className="direction-box" />
         </div>
         <div className="command-buttons">
-          <button onClick={e => props.handleLogout(e)}>Logout</button>
+          <h4 className="commands">Text Commands:</h4>
+          <p className="command-text">go</p>
+          <p className="command-text">say</p>
+          <p className="command-text">shout</p>
+          <p className="command-text">whisper to</p>
+          <p className="command-text">get</p>
+          <p className="command-text">drop</p>
         </div>
+      </div>
+      <div>
+        <button
+          className="direction-button logout-button"
+          onClick={e => props.handleLogout(e)}
+        >
+          Logout
+        </button>
       </div>
     </div>
   );

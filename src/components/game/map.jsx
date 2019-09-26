@@ -82,7 +82,6 @@ function Map({ worldMap, gameData }) {
   }, [gameData.room_id]);
 
   const handleRefresh = () => {
-    console.log("YO");
     const coords = mapRef.current.getBoundingClientRect();
     coords.height *= 0.85;
     setRectCoords({

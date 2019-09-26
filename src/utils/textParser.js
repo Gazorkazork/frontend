@@ -105,25 +105,13 @@ export default function parseCommand(command) {
   // Split input into words
   command = command.split(" ");
 
-  if (["say", "shout", "whisper"].includes(command[0])) {
-    if (command.length === 1) return error();
-    return {
-      act: command[0],
-      adv: "",
-      dirObj: command.slice(1).join(" "),
-      prep: "",
-      indObj: "",
-      error: ""
-    };
-  }
-
   // Remove unnecessary words
   command = command.filter(el => !ignore_words.includes(el));
 
   // Check input for any words to replace with recognized commands
   command = command.map(el => {
-    if (single_word_replace.el) {
-      el = single_word_replace.el;
+    if (single_word_replace[el]) {
+      el = single_word_replace[el];
     }
     return el;
   });
@@ -137,6 +125,19 @@ export default function parseCommand(command) {
     indObj: "",
     error: ""
   };
+  
+  // Check for speech actions
+  if (["say", "shout", "whisper"].includes(command[0])) {
+    if (command.length === 1) return error();
+    return {
+      act: command[0],
+      adv: "",
+      dirObj: command.slice(1).join(" "),
+      prep: "",
+      indObj: "",
+      error: ""
+    };
+  }
 
   // Check for movement shortcuts
   if (movement_adverbs.includes(command[0])) {

@@ -8,8 +8,17 @@ function Main_Hub(props) {
   return (
     <div className="hub-container">
       {/* <h2>This is the main hub</h2> */}
-      <Hub_Left gameData={props.gameData} setGameData={props.setGameData} />
-      <Hub_Right worldMap={props.worldMap} gameData={props.gameData} userData={props.userData} move={props.move}/>
+      <Hub_Left
+        gameData={props.gameData}
+        setGameData={props.setGameData}
+        gameData={props.gameData}
+      />
+      <Hub_Right
+        worldMap={props.worldMap}
+        gameData={props.gameData}
+        userData={props.userData}
+        move={props.move}
+      />
     </div>
   );
 }

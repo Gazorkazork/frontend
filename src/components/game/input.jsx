@@ -3,7 +3,7 @@ import axios from "axios";
 
 import parseCommand from "../../utils/textParser";
 
-function Input({setGameData}) {
+function Input({ gameData, setGameData }) {
   const [userInput, setUserInput] = useState("");
 
   const handleChange = e => {
@@ -24,22 +24,23 @@ function Input({setGameData}) {
             setGameData(res.data);
           })
           .catch(err => console.error(err));
-        break
+        break;
       case "say":
         axios
           .post("https://gazorkazork.herokuapp.com/api/adv/say/", {
             message: parsedInput.dirObj
           })
           .catch(err => console.error(err));
-        break
+        break;
       default:
-        break
+        break;
     }
     setUserInput("");
   };
   return (
     <div className="input-container">
-      <h2>This is the input box</h2>
+      <h2>{gameData.title}</h2>
+      <h3>{gameData.description}</h3>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -47,6 +48,7 @@ function Input({setGameData}) {
           placeholder="Type a command..."
           value={userInput}
           onChange={handleChange}
+          autoComplete="off"
         />
       </form>
     </div>

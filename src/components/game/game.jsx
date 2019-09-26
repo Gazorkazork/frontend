@@ -63,7 +63,7 @@ function Game(props) {
         <p>loading...</p>
       ) : (
         <>
-          <Data />
+          <Data gameData={gameData} />
 
           {worldMap.rooms && (
             <Main_Hub
@@ -73,6 +73,7 @@ function Game(props) {
               userData={userData}
               move={move}
               handleLogout={handleLogout}
+              gameData={gameData}
             />
           )}
           {/* <h3>{gameData.error_msg}</h3> */}

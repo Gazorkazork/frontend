@@ -35,7 +35,7 @@ function Input({ gameData, setGameData }) {
     e.preventDefault();
     const newHist = history.filter((el, i) => i !== histIndex);
     setHistory(
-      newHist.length >= 20
+      newHist.length >= 100
         ? [userInput, ...newHist.slice(1)]
         : [userInput, ...newHist]
     );

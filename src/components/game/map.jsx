@@ -82,7 +82,7 @@ function Map({ worldMap, gameData }) {
   const handleRefresh = () => {
     console.log("YO")
     const coords = mapRef.current.getBoundingClientRect()
-    coords.height *= .88
+    coords.height *= .85
     setRectCoords({
       height: coords.height,
       width: coords.width
@@ -112,7 +112,7 @@ function Map({ worldMap, gameData }) {
       {worldMap.rooms && rectCoords.height !== 0 ? (
         <div className="inner-graph-box">
           <Graph
-          className="graph"
+            className="graph"
             id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
             data={graph}
             config={{...myConfig,

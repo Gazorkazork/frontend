@@ -158,9 +158,11 @@ body {
   font-family: "Roboto", Arial, sans-serif;
   width: 100%;
   height: 100%;
-  background-image: url(assets/trianglify-bw.png);
+  /* background-image: url(assets/trianglify-bw.png); */
+  background-image: url(assets/abstracts_background.jpg);
   background-attachment: fixed;
-  background-size: contain;
+  /* background-size: contain; */
+  background-size: cover;
 }
 
 #root {

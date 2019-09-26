@@ -63,8 +63,8 @@ function Input({ gameData, setGameData }) {
   };
   return (
     <div className="input-container">
-      <h2>{gameData.title}</h2>
-      <h3>{gameData.description}</h3>
+      <h2 className="input-room-title">{gameData.title}</h2>
+      <h3 className="input-room-description">{gameData.description}</h3>
       <form onSubmit={handleSubmit}>
         <input
           type="text"

@@ -57,7 +57,11 @@ class Chat extends React.Component {
       <div className="chat-container">
         <div className="chat-inner-box">
           {this.state.chat.map(txt => {
-            return <p className="chat-text">{txt}</p>;
+            return (
+              <p key={txt + Date.now()} className="chat-text">
+                {txt}
+              </p>
+            );
           })}
         </div>
       </div>

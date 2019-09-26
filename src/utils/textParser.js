@@ -71,14 +71,14 @@ const prepositions = [
 ];
 
 const movement_adverbs = [
-    "n",
-    "s",
-    "e",
-    "w",
-    // "up",
-    // "down",
-    // "in",
-    // "out"
+  "n",
+  "s",
+  "e",
+  "w"
+  // "up",
+  // "down",
+  // "in",
+  // "out"
 ];
 
 // Function to help interpret player commands
@@ -125,9 +125,9 @@ export default function parseCommand(command) {
     indObj: "",
     error: ""
   };
-  
+
   // Check for speech actions
-  if (["say", "shout", "whisper"].includes(command[0])) {
+  if (["say", "shout"].includes(command[0])) {
     if (command.length === 1) return error();
     return {
       act: command[0],
@@ -135,6 +135,18 @@ export default function parseCommand(command) {
       dirObj: command.slice(1).join(" "),
       prep: "",
       indObj: "",
+      error: ""
+    };
+  }
+
+  if ("whisper" === command[0]) {
+    if (command.length <= 3 || command[1] != "to") return error();
+    return {
+      act: command[0],
+      adv: "",
+      dirObj: command.slice(3).join(" "),
+      prep: "to",
+      indObj: command[2],
       error: ""
     };
   }

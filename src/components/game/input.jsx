@@ -3,7 +3,7 @@ import axios from "axios";
 
 import parseCommand from "../../utils/textParser";
 
-let histIndex = -1
+let histIndex = -1;
 
 function Input({ gameData, setGameData }) {
   const [userInput, setUserInput] = useState("");
@@ -13,29 +13,33 @@ function Input({ gameData, setGameData }) {
     setUserInput(e.target.value);
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = e => {
     if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-        e.preventDefault()
+      e.preventDefault();
     }
-  }
+  };
 
-  const handleKeyUp = async (e) => {
+  const handleKeyUp = async e => {
     if (e.key === "ArrowUp" && histIndex < history.length - 1) {
-        e.preventDefault()
-        histIndex++
-        setUserInput(history[histIndex])
+      e.preventDefault();
+      histIndex++;
+      setUserInput(history[histIndex]);
     } else if (e.key === "ArrowDown" && histIndex > 0) {
-        e.preventDefault()
-        histIndex--
-        setUserInput(history[histIndex])
+      e.preventDefault();
+      histIndex--;
+      setUserInput(history[histIndex]);
     }
-  }
+  };
 
   const handleSubmit = e => {
     e.preventDefault();
-    const newHist = history.filter((el, i) => i !== histIndex) 
-    setHistory(newHist.length >= 20 ? [userInput, ...newHist.slice(1)] : [userInput, ...newHist])
-    histIndex = -1
+    const newHist = history.filter((el, i) => i !== histIndex);
+    setHistory(
+      newHist.length >= 20
+        ? [userInput, ...newHist.slice(1)]
+        : [userInput, ...newHist]
+    );
+    histIndex = -1;
     const parsedInput = parseCommand(userInput);
     switch (parsedInput.act) {
       case "go":
@@ -44,7 +48,6 @@ function Input({ gameData, setGameData }) {
             direction: parsedInput.adv
           })
           .then(res => {
-            console.log(res);
             setGameData(res.data);
           })
           .catch(err => console.error(err));
@@ -53,6 +56,19 @@ function Input({ gameData, setGameData }) {
         axios
           .post("https://gazorkazork.herokuapp.com/api/adv/say/", {
             message: parsedInput.dirObj
+          })
+          .catch(err => console.error(err));
+      case "shout":
+        axios
+          .post("https://gazorkazork.herokuapp.com/api/adv/shout/", {
+            message: parsedInput.dirObj
+          })
+          .catch(err => console.error(err));
+      case "whisper":
+        axios
+          .post("https://gazorkazork.herokuapp.com/api/adv/whisper/", {
+            message: parsedInput.dirObj,
+            target: parsedInput.indObj
           })
           .catch(err => console.error(err));
         break;
@@ -66,7 +82,8 @@ function Input({ gameData, setGameData }) {
       <h2 className="input-room-title">{gameData.title}</h2>
       <h3 className="input-room-description">{gameData.description}</h3>
       <form onSubmit={handleSubmit}>
-        <input className="input-box"
+        <input
+          className="input-box"
           type="text"
           name="userInput"
           placeholder="Type a command..."

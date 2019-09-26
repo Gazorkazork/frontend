@@ -4,7 +4,7 @@ function Controls(props) {
   return (
     <div className="controls-container">
 
-      <h3 className="room-title">Controls</h3>
+      <h3 className="hub-right-heading">Controls</h3>
 
       <div className="direction-controls">
         <div className="direction-box" />

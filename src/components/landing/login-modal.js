@@ -112,7 +112,9 @@ const Login = props => {
                 value={loginState.password}
               />
             </div>
-            {errorMsg.login && <p>{errorMsg.msg}</p>}
+            {errorMsg.login && (
+              <p className="login-error-message">{errorMsg.msg}</p>
+            )}
             <button className="form-btn" type="submit">
               Log In
             </button>
@@ -174,7 +176,9 @@ const Login = props => {
                 value={registerState.password2}
               />
             </div>
-            {errorMsg.register && <p>{errorMsg.msg}</p>}
+            {errorMsg.register && (
+              <p className="login-error-message">{errorMsg.msg}</p>
+            )}
             <button className="form-btn" type="submit">
               Sign Up
             </button>

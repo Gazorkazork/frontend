@@ -83,7 +83,6 @@ const movement_adverbs = [
 
 // Function to help interpret player commands
 export default function parseCommand(command) {
-  command = command.toLowerCase()
   const error = (text = "generic error") => ({
     act: "",
     adv: "",
@@ -128,7 +127,7 @@ export default function parseCommand(command) {
   };
 
   // Check for speech actions
-  if (["say", "shout"].includes(command[0])) {
+  if (["say", "shout"].includes(command[0].toLowerCase())) {
     if (command.length === 1) return error();
     return {
       act: command[0],
@@ -140,7 +139,7 @@ export default function parseCommand(command) {
     };
   }
 
-  if ("whisper" === command[0]) {
+  if ("whisper" === command[0].toLowerCase()) {
     if (command.length <= 3 || command[1] != "to") return error();
     return {
       act: command[0],
@@ -151,6 +150,8 @@ export default function parseCommand(command) {
       error: ""
     };
   }
+
+  command.map(el => el.toLowerCase())
 
   // Check for movement shortcuts
   if (movement_adverbs.includes(command[0])) {

@@ -9,12 +9,13 @@ class Chat extends React.Component {
     };
   }
   addMessage = msg => {
+    console.log(this.state.chat.length)
     this.setState(prev => ({
       ...prev,
       chat:
         prev.chat.length >= 30
-          ? [msg, ...prev.chat.slice(1)]
-          : [msg, ...prev.chat]
+          ? [{key: Date.now(), message: msg}, ...prev.chat.slice(0, -1)]
+          : [{key: Date.now(), message: msg}, ...prev.chat]
     }));
   };
 
@@ -39,7 +40,7 @@ class Chat extends React.Component {
         this.props.setGameData({
           ...this.props.gameData,
           players: this.props.gameData.players.filter(
-            name => name != split_message[0]
+            name => name !== split_message[0]
           )
         });
       }
@@ -58,10 +59,10 @@ class Chat extends React.Component {
     return (
       <div className="chat-container">
         <div className="chat-inner-box">
-          {this.state.chat.map(txt => {
+          {this.state.chat.map(el => {
             return (
-              <p key={txt + Date.now()} className="chat-text">
-                {txt}
+              <p key={el.key} className="chat-text">
+                {el.message}
               </p>
             );
           })}

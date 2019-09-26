@@ -3,15 +3,39 @@ import axios from "axios";
 
 import parseCommand from "../../utils/textParser";
 
+let histIndex = -1
+
 function Input({ gameData, setGameData }) {
   const [userInput, setUserInput] = useState("");
+  const [history, setHistory] = useState([]);
 
   const handleChange = e => {
     setUserInput(e.target.value);
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+        e.preventDefault()
+    }
+  }
+
+  const handleKeyUp = async (e) => {
+    if (e.key === "ArrowUp" && histIndex < history.length - 1) {
+        e.preventDefault()
+        histIndex++
+        setUserInput(history[histIndex])
+    } else if (e.key === "ArrowDown" && histIndex > 0) {
+        e.preventDefault()
+        histIndex--
+        setUserInput(history[histIndex])
+    }
+  }
+
   const handleSubmit = e => {
     e.preventDefault();
+    const newHist = history.filter((el, i) => i !== histIndex) 
+    setHistory(newHist.length >= 20 ? [userInput, ...newHist.slice(1)] : [userInput, ...newHist])
+    histIndex = -1
     const parsedInput = parseCommand(userInput);
     switch (parsedInput.act) {
       case "go":
@@ -48,6 +72,8 @@ function Input({ gameData, setGameData }) {
           placeholder="Type a command..."
           value={userInput}
           onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          onKeyUp={handleKeyUp}
           autoComplete="off"
         />
       </form>

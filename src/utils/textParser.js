@@ -83,6 +83,7 @@ const movement_adverbs = [
 
 // Function to help interpret player commands
 export default function parseCommand(command) {
+  
   const error = (text = "generic error") => ({
     act: "",
     adv: "",
@@ -95,6 +96,35 @@ export default function parseCommand(command) {
   // Edge case
   if (!command.length) return error("no input");
 
+  // Check for speech actions
+  let firstSplit = command.split(" ")
+  firstSplit[0] = firstSplit[0].toLowerCase()
+  if (["say", "shout"].includes(firstSplit[0])) {
+    if (firstSplit.length === 1) return error();
+    return {
+      act: firstSplit[0],
+      adv: "",
+      dirObj: firstSplit.slice(1).join(" "),
+      prep: "",
+      indObj: "",
+      error: ""
+    };
+  }
+
+  if ("whisper" === firstSplit[0]) {
+    if (firstSplit.length <= 3 || firstSplit[1].toLowerCase() !== "to") return error();
+    return {
+      act: firstSplit[0],
+      adv: "",
+      dirObj: firstSplit.slice(3).join(" "),
+      prep: "to",
+      indObj: firstSplit[2],
+      error: ""
+    };
+  }
+
+  command = command.toLowerCase()
+
   // Check input for any phrases to be simplified
   for (let key in multi_word_replace) {
     if (command.includes(key)) {
@@ -104,6 +134,7 @@ export default function parseCommand(command) {
 
   // Split input into words
   command = command.split(" ");
+  
 
   // Remove unnecessary words
   command = command.filter(el => !ignore_words.includes(el));
@@ -125,33 +156,6 @@ export default function parseCommand(command) {
     indObj: "",
     error: ""
   };
-
-  // Check for speech actions
-  if (["say", "shout"].includes(command[0].toLowerCase())) {
-    if (command.length === 1) return error();
-    return {
-      act: command[0],
-      adv: "",
-      dirObj: command.slice(1).join(" "),
-      prep: "",
-      indObj: "",
-      error: ""
-    };
-  }
-
-  if ("whisper" === command[0].toLowerCase()) {
-    if (command.length <= 3 || command[1] != "to") return error();
-    return {
-      act: command[0],
-      adv: "",
-      dirObj: command.slice(3).join(" "),
-      prep: "to",
-      indObj: command[2],
-      error: ""
-    };
-  }
-
-  command.map(el => el.toLowerCase())
 
   // Check for movement shortcuts
   if (movement_adverbs.includes(command[0])) {

@@ -83,6 +83,7 @@ const movement_adverbs = [
 
 // Function to help interpret player commands
 export default function parseCommand(command) {
+  command = command.toLowerCase()
   const error = (text = "generic error") => ({
     act: "",
     adv: "",

@@ -48,6 +48,8 @@ class Chat extends React.Component {
 
     const channel_main = pusher.subscribe(`main-channel`);
     channel_main.bind("broadcast", data => {
+      const split_message = data.message.split(" ");
+      if (split_message[0] === this.props.gameData.name) return;
       this.addMessage(data.message);
     });
   }

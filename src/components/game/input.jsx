@@ -58,12 +58,14 @@ function Input({ gameData, setGameData }) {
             message: parsedInput.dirObj
           })
           .catch(err => console.error(err));
+        break;
       case "shout":
         axios
           .post("https://gazorkazork.herokuapp.com/api/adv/shout/", {
             message: parsedInput.dirObj
           })
           .catch(err => console.error(err));
+        break;
       case "whisper":
         axios
           .post("https://gazorkazork.herokuapp.com/api/adv/whisper/", {

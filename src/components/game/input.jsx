@@ -64,6 +64,13 @@ function Input({ gameData, setGameData }) {
             message: parsedInput.dirObj
           })
           .catch(err => console.error(err));
+      case "whisper":
+        axios
+          .post("https://gazorkazork.herokuapp.com/api/adv/whisper/", {
+            message: parsedInput.dirObj,
+            target: parsedInput.indObj
+          })
+          .catch(err => console.error(err));
         break;
       default:
         break;

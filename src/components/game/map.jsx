@@ -58,6 +58,7 @@ const myConfig = {
 };
 
 function Map({ worldMap, gameData }) {
+  console.log(gameData);
   const mapRef = useRef(null);
   const [rectCoords, setRectCoords] = useState({
     height: 0,
@@ -73,11 +74,37 @@ function Map({ worldMap, gameData }) {
       width: coords.width
     });
     const south_links = worldMap.rooms
-      .filter(node => node.south !== 0)
+      .filter(node => {
+        if (
+          node.id === gameData.room_id ||
+          gameData.visited.includes(node.id)
+        ) {
+          if (
+            gameData.visited.includes(node.south) ||
+            node.south === gameData.room_id
+          ) {
+            return true;
+          }
+        }
+        return false;
+      })
       .map(link => ({ source: link.id, target: link.south }));
 
     const east_links = worldMap.rooms
-      .filter(node => node.east !== 0)
+      .filter(node => {
+        if (
+          node.id === gameData.room_id ||
+          gameData.visited.includes(node.id)
+        ) {
+          if (
+            gameData.visited.includes(node.east) ||
+            node.east === gameData.room_id
+          ) {
+            return true;
+          }
+        }
+        return false;
+      })
       .map(link => ({ source: link.id, target: link.east }));
     const newGraph = {
       nodes: worldMap.rooms.map(node => ({

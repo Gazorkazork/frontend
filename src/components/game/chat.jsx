@@ -9,13 +9,12 @@ class Chat extends React.Component {
     };
   }
   addMessage = msg => {
-    console.log(this.state.chat.length)
     this.setState(prev => ({
       ...prev,
       chat:
         prev.chat.length >= 30
-          ? [{key: Date.now(), message: msg}, ...prev.chat.slice(0, -1)]
-          : [{key: Date.now(), message: msg}, ...prev.chat]
+          ? [{ key: Date.now(), message: msg }, ...prev.chat.slice(0, -1)]
+          : [{ key: Date.now(), message: msg }, ...prev.chat]
     }));
   };
 

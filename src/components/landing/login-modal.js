@@ -15,6 +15,33 @@ const Login = props => {
     password2: ""
   });
 
+  const [passwordErr, setPasswordErr] = useState({
+    isError: false,
+    message: ""
+  });
+
+  const passwordError = password => {
+    let chars = RegExp("[a-zA-Z]", "g");
+    let digits = RegExp("[0-9]", "g");
+
+    if (
+      password.length < 9 ||
+      !chars.test(password) ||
+      !digits.test(password)
+    ) {
+      setPasswordErr({
+        isError: true,
+        message:
+          "Password must contain AT LEAST 9 characters, 2 letters, and 2 numbers"
+      });
+    } else {
+      setPasswordErr({
+        isError: false,
+        message: ""
+      });
+    }
+  };
+
   const [isRegister, setIsRegister] = useState(false);
 
   const handleLogin = e => {
@@ -33,7 +60,6 @@ const Login = props => {
 
   const handleRegister = e => {
     e.preventDefault();
-    console.log(registerState);
     axios
       .post(
         "https://gazorkazork.herokuapp.com/api/registration/",
@@ -164,7 +190,13 @@ const Login = props => {
                 onChange={registerChange}
                 name="password1"
                 value={registerState.password1}
+                onBlur={e => {
+                  passwordError(e.target.value);
+                }}
               />
+              {passwordErr.isError && (
+                <p className="login-error-message">{passwordErr.message}</p>
+              )}
             </div>
             <div className="input-field">
               <i className="fas fa-key"></i>

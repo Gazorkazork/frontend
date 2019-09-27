@@ -2,7 +2,6 @@ import React from "react";
 import "./game.css";
 
 function Data({ gameData }) {
-  console.log(gameData);
   return (
     <div className="data-container">
       <h2 className="data-heading">{gameData.name}</h2>

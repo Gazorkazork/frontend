@@ -1,19 +1,14 @@
 import React from "react";
-import Map from "./map";
 import "./game.css";
-import Hub_Left from "./hub-left";
-import Hub_Right from "./hub-right";
+import HubLeft from "./hub-left";
+import HubRight from "./hub-right";
 
-function Main_Hub(props) {
+function MainHub(props) {
   return (
     <div className="hub-container">
       {/* <h2>This is the main hub</h2> */}
-      <Hub_Left
-        gameData={props.gameData}
-        setGameData={props.setGameData}
-        gameData={props.gameData}
-      />
-      <Hub_Right
+      <HubLeft gameData={props.gameData} setGameData={props.setGameData} />
+      <HubRight
         handleLogout={props.handleLogout}
         worldMap={props.worldMap}
         gameData={props.gameData}
@@ -24,4 +19,4 @@ function Main_Hub(props) {
   );
 }
 
-export default Main_Hub;
+export default MainHub;

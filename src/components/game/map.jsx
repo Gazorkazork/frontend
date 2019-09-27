@@ -65,10 +65,11 @@ function Map({ worldMap, gameData }) {
     width: 0
   });
   const [graph, setGraph] = useState({});
+  const [currentNode, setCurrentNode] = useState({});
 
   const handleRefresh = useCallback(() => {
     const coords = mapRef.current.getBoundingClientRect();
-    coords.height *= 0.85;
+    coords.height *= 0.81;
     setRectCoords({
       height: coords.height,
       width: coords.width
@@ -111,15 +112,19 @@ function Map({ worldMap, gameData }) {
       node => node.id === gameData.room_id || gameData.visited.includes(node.id)
     );
     const newGraph = {
-      nodes: nodes.map(node => ({
-        ...node,
-        x: node.x * (coords.width / 20) + 0.5 * coords.width,
-        y: node.y * -(coords.width / 20) + 0.5 * coords.height,
-        size:
-          node.id === gameData.room_id ? coords.width / 3 : coords.width / 6,
-        color: node.id === gameData.room_id ? "#91ff01" : "#d3d3d3",
-        symbolType: node.id === gameData.room_id ? "circle" : "square"
-      })),
+      nodes: nodes.map(node => {
+          if (node.id === gameData.room_id) {
+            setCurrentNode(node)
+          }
+          return {
+            ...node,
+            x: node.x * (coords.width / 20) + 0.5 * coords.width,
+            y: node.y * -(coords.width / 20) + 0.5 * coords.height,
+            size:
+                node.id === gameData.room_id ? coords.width / 3 : coords.width / 6,
+            color: node.id === gameData.room_id ? "#91ff01" : "#d3d3d3",
+            symbolType: node.id === gameData.room_id ? "circle" : "square"
+        }}),
       links: [...south_links, ...east_links]
     };
     setGraph(newGraph);
@@ -133,6 +138,8 @@ function Map({ worldMap, gameData }) {
   useEffect(() => {
     handleRefresh();
   }, [gameData.room_id, handleRefresh]);
+
+  console.log(currentNode)
 
   return (
     <div className="map-container" ref={mapRef}>
@@ -149,6 +156,12 @@ function Map({ worldMap, gameData }) {
             }}
           />
           <h3 className="hub-right-heading">{gameData.title}</h3>
+          <h2 className="input-room-description">Exits:
+            <span>{currentNode.north !== 0 ? " n" : ""}</span>
+            <span>{currentNode.south !== 0 ? " s" : ""}</span>
+            <span>{currentNode.east !== 0 ? " e" : ""}</span>
+            <span>{currentNode.west !== 0 ? " w" : ""}</span>
+          </h2>
         </div>
       ) : (
         <p>loading world map...</p>

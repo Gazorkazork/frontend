@@ -42,7 +42,7 @@ const Login = props => {
     }
   };
 
-  const [isRegister, setIsRegister] = useState(false);
+  // const [isRegister, setIsRegister] = useState(false);
 
   const handleLogin = e => {
     e.preventDefault();
@@ -95,7 +95,7 @@ const Login = props => {
   return (
     <div className="modal-wrapper">
       <div className="login-wrapper">
-        <div className="collapsed-section hidden">
+        {/* <div className="collapsed-section">
           <div className="hide-section">
             <h2 className="collapsed-heading">Have an Account?</h2>
             <p className="collapsed-text">
@@ -113,7 +113,7 @@ const Login = props => {
               Log In
             </button>
           </div>
-        </div>
+        </div> */}
 
         <div className="form-wrapper login">
           <h2 className="form-heading">Log In To Your Profile</h2>
@@ -149,7 +149,7 @@ const Login = props => {
       </div>
 
       <div className="signup-wrapper">
-        <div className="collapsed-section hidden">
+        {/* <div className="collapsed-section hidden">
           <div className="hide-section">
             <h2 className="collapsed-heading">New Here?</h2>
             <p className="collapsed-text">
@@ -167,7 +167,7 @@ const Login = props => {
               Sign Up
             </button>
           </div>
-        </div>
+        </div> */}
 
         <div className="form-wrapper signup">
           <h2 className="form-heading">Create Account</h2>

@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Graph } from "react-d3-graph";
 
-const root_x = 175;
-const root_y = 140;
-const multiplier = 18;
-
 const myConfig = {
   automaticRearrangeAfterDropNode: true,
   collapsible: false,
@@ -20,8 +16,6 @@ const myConfig = {
   panAndZoom: false,
   staticGraph: true,
   staticGraphWithDragAndDrop: true,
-  // height: 280,
-  // width: 350,
   d3: {
     alphaTarget: 0,
     gravity: -400,
@@ -69,12 +63,12 @@ function Map({ worldMap, gameData }) {
     height: 0,
     width: 0
   });
-  const [configM, setConfigM] = useState(myConfig);
   const [graph, setGraph] = useState({});
 
   useEffect(() => {
     window.addEventListener("resize", handleRefresh);
     handleRefresh();
+    return () => window.removeEventListener("resize", handleRefresh);
   }, []);
 
   useEffect(() => {

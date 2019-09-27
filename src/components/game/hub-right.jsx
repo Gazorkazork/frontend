@@ -2,7 +2,7 @@ import React from "react";
 import Map from "./map";
 import Controls from "./controls";
 
-function Hub_Right(props) {
+function HubRight(props) {
   return (
     <div className="hub-right-container">
       <Map
@@ -15,4 +15,4 @@ function Hub_Right(props) {
   );
 }
 
-export default Hub_Right;
+export default HubRight;

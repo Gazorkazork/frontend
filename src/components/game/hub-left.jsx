@@ -3,7 +3,7 @@ import React from "react";
 import Chat from "./chat.jsx";
 import Input from "./input.jsx";
 
-function Hub_Left(props) {
+function HubLeft(props) {
   return (
     <div className="hub-left-container">
       <Chat
@@ -16,4 +16,4 @@ function Hub_Left(props) {
   );
 }
 
-export default Hub_Left;
+export default HubLeft;

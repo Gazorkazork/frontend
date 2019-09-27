@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./game.css";
 import axios from "axios";
-
-import Map from "./map";
 import Data from "./data";
-import Main_Hub from "./main-hub";
+import MainHub from "./main-hub";
 
 axios.interceptors.request.use(
   options => {
@@ -66,14 +64,13 @@ function Game(props) {
           <Data gameData={gameData} />
 
           {worldMap.rooms && (
-            <Main_Hub
+            <MainHub
               worldMap={worldMap}
               gameData={gameData}
               setGameData={setGameData}
               userData={userData}
               move={move}
               handleLogout={handleLogout}
-              gameData={gameData}
             />
           )}
           {/* <h3>{gameData.error_msg}</h3> */}

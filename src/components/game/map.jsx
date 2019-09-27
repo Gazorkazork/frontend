@@ -106,8 +106,12 @@ function Map({ worldMap, gameData }) {
         return false;
       })
       .map(link => ({ source: link.id, target: link.east }));
+
+    const nodes = worldMap.rooms.filter(
+      node => node.id === gameData.room_id || gameData.visited.includes(node.id)
+    );
     const newGraph = {
-      nodes: worldMap.rooms.map(node => ({
+      nodes: nodes.map(node => ({
         ...node,
         x: node.x * (coords.width / 20) + 0.5 * coords.width,
         y: node.y * -(coords.width / 20) + 0.5 * coords.height,

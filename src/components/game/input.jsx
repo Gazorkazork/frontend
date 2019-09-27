@@ -94,7 +94,7 @@ function Input({ gameData, setGameData }) {
           onKeyDown={handleKeyDown}
           onKeyUp={handleKeyUp}
           autoComplete="off"
-          maxLength="50"
+          maxLength="250"
         />
       </form>
     </div>

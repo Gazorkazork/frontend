@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Graph } from "react-d3-graph";
 
 const myConfig = {
@@ -65,17 +65,7 @@ function Map({ worldMap, gameData }) {
   });
   const [graph, setGraph] = useState({});
 
-  useEffect(() => {
-    window.addEventListener("resize", handleRefresh);
-    handleRefresh();
-    return () => window.removeEventListener("resize", handleRefresh);
-  }, []);
-
-  useEffect(() => {
-    handleRefresh();
-  }, [gameData.room_id]);
-
-  const handleRefresh = () => {
+  const handleRefresh = useCallback(() => {
     const coords = mapRef.current.getBoundingClientRect();
     coords.height *= 0.85;
     setRectCoords({
@@ -102,7 +92,16 @@ function Map({ worldMap, gameData }) {
       links: [...south_links, ...east_links]
     };
     setGraph(newGraph);
-  };
+  }, [gameData.room_id, worldMap.rooms]);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleRefresh);
+    return () => window.removeEventListener("resize", handleRefresh);
+  }, []);
+
+  useEffect(() => {
+    handleRefresh();
+  }, [gameData.room_id, handleRefresh]);
 
   return (
     <div className="map-container" ref={mapRef}>

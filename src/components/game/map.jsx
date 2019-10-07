@@ -68,6 +68,26 @@ function Map({ worldMap, gameData }) {
   const [currentNode, setCurrentNode] = useState({});
 
   const handleRefresh = useCallback(() => {
+    setCurrentNode(worldMap.rooms.find(room => room.id === gameData.room_id))
+    const visited = []
+    const nodes = worldMap.rooms.filter(room => {
+      if (gameData.visited.includes(room.id) || room.id === gameData.room_id) {
+        visited.push(room.id)
+        return true
+      }
+      return false
+    })
+    const adjacent = new Set()
+    nodes.forEach(room => {
+      const directions = new Set(["north", "south", "east", "west"])
+      directions.forEach(dir => {
+        if (room[dir] && !visited.includes(room[dir])) {
+          adjacent.add(room[dir])
+        }
+      })
+    })
+    console.log(adjacent)
+
     const coords = mapRef.current.getBoundingClientRect();
     coords.height *= 0.81;
     setRectCoords({
@@ -76,14 +96,9 @@ function Map({ worldMap, gameData }) {
     });
     const south_links = worldMap.rooms
       .filter(node => {
-        if (
-          node.id === gameData.room_id ||
-          gameData.visited.includes(node.id)
-        ) {
-          if (
-            gameData.visited.includes(node.south) ||
-            node.south === gameData.room_id
-          ) {
+        if (visited.includes(node.id) || (adjacent.has(node.id))) {
+          if (visited.includes(node.south) || (adjacent.has(node.south))) {
+            if (!(adjacent.has(node.south) && (adjacent.has(node.id))))
             return true;
           }
         }
@@ -93,14 +108,9 @@ function Map({ worldMap, gameData }) {
 
     const east_links = worldMap.rooms
       .filter(node => {
-        if (
-          node.id === gameData.room_id ||
-          gameData.visited.includes(node.id)
-        ) {
-          if (
-            gameData.visited.includes(node.east) ||
-            node.east === gameData.room_id
-          ) {
+        if (visited.includes(node.id) || (adjacent.has(node.id))) {
+          if (visited.includes(node.east) || (adjacent.has(node.east))) {
+            if (!(adjacent.has(node.east) && (adjacent.has(node.id))))
             return true;
           }
         }
@@ -108,14 +118,10 @@ function Map({ worldMap, gameData }) {
       })
       .map(link => ({ source: link.id, target: link.east }));
 
-    const nodes = worldMap.rooms.filter(
-      node => node.id === gameData.room_id || gameData.visited.includes(node.id)
-    );
+    const adjacentNodes = worldMap.rooms.filter(room => adjacent.has(room.id))
     const newGraph = {
-      nodes: nodes.map(node => {
-          if (node.id === gameData.room_id) {
-            setCurrentNode(node)
-          }
+      nodes: [
+        ...nodes.map(node => {
           return {
             ...node,
             x: node.x * (coords.width / 20) + 0.5 * coords.width,
@@ -125,6 +131,17 @@ function Map({ worldMap, gameData }) {
             color: node.id === gameData.room_id ? "#91ff01" : "#d3d3d3",
             symbolType: node.id === gameData.room_id ? "circle" : "square"
         }}),
+        ...adjacentNodes.map(node => {
+          return {
+            ...node,
+            x: node.x * (coords.width / 20) + 0.5 * coords.width,
+            y: node.y * -(coords.width / 20) + 0.5 * coords.height,
+            size:
+                node.id === gameData.room_id ? coords.width / 3 : coords.width / 6,
+            color: "#556292",
+            symbolType: "square"
+        }}),
+      ],
       links: [...south_links, ...east_links]
     };
     setGraph(newGraph);

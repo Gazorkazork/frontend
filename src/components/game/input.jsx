@@ -74,6 +74,27 @@ function Input({ gameData, setGameData }) {
           })
           .catch(err => console.error(err));
         break;
+      case "get":
+        const item = gameData.room_items.find(
+          item => item.name.toLowerCase() === parsedInput.dirObj
+        );
+
+        if (!!item) {
+          axios
+            .post("https://gazorkazork.herokuapp.com/api/adv/get_item/", {
+              item: item.id
+            })
+            .then(res => {
+              console.log("res", res);
+              setGameData({
+                ...gameData,
+                room_items: res.data.room_items,
+                inventory: res.data.inventory
+              });
+            })
+            .catch(err => console.error(err));
+        }
+        break;
       default:
         break;
     }

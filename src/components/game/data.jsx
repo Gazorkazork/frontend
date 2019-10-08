@@ -2,6 +2,7 @@ import React from "react";
 import "./game.css";
 
 function Data({ gameData }) {
+  console.log("gamedata", gameData);
   return (
     <div className="data-container">
       <h2 className="data-heading">{gameData.name}</h2>
@@ -21,6 +22,12 @@ function Data({ gameData }) {
         </div>
       )}
       <h3 className="data-categories">Items in room:</h3>
+      {gameData.items &&
+        gameData.items.map(item => (
+          <p className="player" key={item.item_name}>
+            {`${item.item_name} x ${item.amount}`}
+          </p>
+        ))}
     </div>
   );
 }

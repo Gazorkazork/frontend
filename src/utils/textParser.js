@@ -1,6 +1,12 @@
 const multi_word_replace = {
   "pick up": "pick_up",
-  "put down": "put_down"
+  "put down": "put_down",
+  "laser boots": "laser_boots",
+  "rusty crowbar": "rusty_crowbar",
+  "strange goo": "strange_goo",
+  "ola free trial cd": "ola_free_trial_cd",
+  "free trial cd": "ola_free_trial_cd",
+  "trial cd": "ola_free_trial_cd"
 };
 
 const single_word_replace = {
@@ -27,7 +33,11 @@ const single_word_replace = {
   kill: "attack",
   walk: "go",
   travel: "go",
-  speak: "say"
+  speak: "say",
+  boots: "laser_boots",
+  crowbar: "rusty_crowbar",
+  goo: "strange_goo",
+  cd: "ola_free_trial_cd"
 };
 
 const ignore_words = ["the", "a", "an", "and"];
@@ -83,7 +93,6 @@ const movement_adverbs = [
 
 // Function to help interpret player commands
 export default function parseCommand(command) {
-  
   const error = (text = "generic error") => ({
     act: "",
     adv: "",
@@ -97,8 +106,8 @@ export default function parseCommand(command) {
   if (!command.length) return error("no input");
 
   // Check for speech actions
-  let firstSplit = command.split(" ")
-  firstSplit[0] = firstSplit[0].toLowerCase()
+  let firstSplit = command.split(" ");
+  firstSplit[0] = firstSplit[0].toLowerCase();
   if (["say", "shout"].includes(firstSplit[0])) {
     if (firstSplit.length === 1) return error();
     return {
@@ -112,7 +121,8 @@ export default function parseCommand(command) {
   }
 
   if ("whisper" === firstSplit[0]) {
-    if (firstSplit.length <= 3 || firstSplit[1].toLowerCase() !== "to") return error();
+    if (firstSplit.length <= 3 || firstSplit[1].toLowerCase() !== "to")
+      return error();
     return {
       act: firstSplit[0],
       adv: "",
@@ -123,7 +133,7 @@ export default function parseCommand(command) {
     };
   }
 
-  command = command.toLowerCase()
+  command = command.toLowerCase();
 
   // Check input for any phrases to be simplified
   for (let key in multi_word_replace) {
@@ -134,7 +144,6 @@ export default function parseCommand(command) {
 
   // Split input into words
   command = command.split(" ");
-  
 
   // Remove unnecessary words
   command = command.filter(el => !ignore_words.includes(el));
@@ -223,12 +232,14 @@ export default function parseCommand(command) {
 
   // Set items in result and return
   if (command[0]) {
+    command[0] = command[0].replace(/_/g, " ");
     result.dirObj = command[0];
   }
   if (prep) {
     result.prep = prep;
   }
   if (indObj) {
+    indObj = indObj.replace(/_/g, " ");
     result.indObj = indObj;
   }
 

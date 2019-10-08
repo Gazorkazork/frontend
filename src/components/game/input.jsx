@@ -95,6 +95,27 @@ function Input({ gameData, setGameData }) {
             .catch(err => console.error(err));
         }
         break;
+      case "drop":
+        const ditem = gameData.inventory.find(
+          item => item.name.toLowerCase() === parsedInput.dirObj
+        );
+
+        if (!!ditem) {
+          axios
+            .post("https://gazorkazork.herokuapp.com/api/adv/drop_item/", {
+              item: ditem.id
+            })
+            .then(res => {
+              console.log("res", res);
+              setGameData({
+                ...gameData,
+                room_items: res.data.room_items,
+                inventory: res.data.inventory
+              });
+            })
+            .catch(err => console.error(err));
+        }
+        break;
       default:
         break;
     }

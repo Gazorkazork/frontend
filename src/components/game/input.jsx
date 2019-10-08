@@ -116,6 +116,17 @@ function Input({ gameData, setGameData }) {
             .catch(err => console.error(err));
         }
         break;
+      case "look":
+        let target = gameData.room_items.find(item => item.name.toLowerCase() === parsedInput.dirObj)
+        if (!target) {
+          target = gameData.room_items.find(item => item.name.toLowerCase() === parsedInput.dirObj)
+        }
+        if (!target) {
+          // SEND OUT MESSAGE: NOTHING HERE BY THAT NAME
+        } else {
+          // SEND OUT MESSAGE: target.description
+        }
+        break;
       default:
         break;
     }

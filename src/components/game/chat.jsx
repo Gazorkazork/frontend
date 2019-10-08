@@ -8,6 +8,7 @@ class Chat extends React.Component {
       chat: []
     };
   }
+  
   addMessage = msg => {
     this.setState(prev => ({
       ...prev,

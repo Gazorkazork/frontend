@@ -117,14 +117,16 @@ function Input({ gameData, setGameData }) {
         }
         break;
       case "look":
-        let target = gameData.room_items.find(item => item.name.toLowerCase() === parsedInput.dirObj)
-        if (!target) {
-          target = gameData.room_items.find(item => item.name.toLowerCase() === parsedInput.dirObj)
+        let lookTarget = gameData.room_items.find(item => item.name.toLowerCase() === parsedInput.dirObj)
+        if (!lookTarget) {
+          lookTarget = gameData.inventory.find(item => item.name.toLowerCase() === parsedInput.dirObj)
         }
-        if (!target) {
-          // SEND OUT MESSAGE: NOTHING HERE BY THAT NAME
-        } else {
-          // SEND OUT MESSAGE: target.description
+        if (!!lookTarget) {
+            axios
+            .post("https://gazorkazork.herokuapp.com/api/adv/look_item/", {
+              target: lookTarget.id
+            })
+            .catch(err => console.error(err));
         }
         break;
       default:

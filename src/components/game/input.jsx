@@ -116,6 +116,19 @@ function Input({ gameData, setGameData }) {
             .catch(err => console.error(err));
         }
         break;
+      case "look":
+        let lookTarget = gameData.room_items.find(item => item.name.toLowerCase() === parsedInput.dirObj)
+        if (!lookTarget) {
+          lookTarget = gameData.inventory.find(item => item.name.toLowerCase() === parsedInput.dirObj)
+        }
+        if (!!lookTarget) {
+            axios
+            .post("https://gazorkazork.herokuapp.com/api/adv/look_item/", {
+              target: lookTarget.id
+            })
+            .catch(err => console.error(err));
+        }
+        break;
       default:
         break;
     }

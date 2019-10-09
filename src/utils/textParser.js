@@ -6,7 +6,8 @@ const multi_word_replace = {
   "strange goo": "strange_goo",
   "ola free trial cd": "ola_free_trial_cd",
   "free trial cd": "ola_free_trial_cd",
-  "trial cd": "ola_free_trial_cd"
+  "trial cd": "ola_free_trial_cd",
+  "look at": "look"
 };
 
 const single_word_replace = {

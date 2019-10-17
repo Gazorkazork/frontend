@@ -25,7 +25,7 @@ class Chat extends React.Component {
     const pusher = new Pusher("345e464acd1baf7700e8", {
       cluster: "us3",
       forceTLS: true,
-      authEndpoint: "https://gazorkazork.herokuapp.com/pusher_auth/"
+      authEndpoint: "https://gazorkazork.herokuapp.com/api/adv/pusher_auth/"
     });
     const channel_user = pusher.subscribe(`p-channel-${this.props.uuid}`);
     channel_user.bind("broadcast", data => {

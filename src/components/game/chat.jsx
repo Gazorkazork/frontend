@@ -24,7 +24,8 @@ class Chat extends React.Component {
 
     const pusher = new Pusher("345e464acd1baf7700e8", {
       cluster: "us3",
-      forceTLS: true
+      forceTLS: true,
+      authEndpoint: "/api/adv/pusher_auth/"
     });
     const channel_user = pusher.subscribe(`p-channel-${this.props.uuid}`);
     channel_user.bind("broadcast", data => {
@@ -47,7 +48,7 @@ class Chat extends React.Component {
       this.addMessage(data.message);
     });
 
-    const channel_main = pusher.subscribe(`main-channel`);
+    const channel_main = pusher.subscribe(`presence-main-channel`);
     channel_main.bind("broadcast", data => {
       const split_message = data.message.split(" ");
       if (split_message[0] === this.props.gameData.name) return;
